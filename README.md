@@ -1,4 +1,4 @@
-# Registration_Tutorial
+# Registration Tutorial
 <table>
     <tr>
         <td>
