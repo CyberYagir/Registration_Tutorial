@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://danielilett.com/2021-08-24-tut5-17-stylised-grass/ -->
+<html lang="en" data-theme="null"><!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#4903fc">
+
+  <title>Stylised Grass with Shaders in URP</title>
+
+  <meta name="author" content="Daniel Ilett">
+
+  <meta name="twitter:site" content="@daniel_ilett">
+  <meta name="twitter:creator" content="@daniel_ilett">
+
+  <meta property="og:title" content="Stylised Grass with Shaders in URP">
+
+  <meta property="og:site_name" content="Daniel Ilett: Games | Shaders | Tutorials">
+  <meta name="twitter:image:alt" content="Grass Me Up">
+
+  
+    <meta name="description" content="Grass Me Up">
+    <meta property="og:description" content="Grass Me Up">
+  
+
+  
+    <meta name="image" content="https://danielilett.com//img/tut5/part17-banner.jpg">
+    <meta property="og:image" content="https://danielilett.com//img/tut5/part17-banner.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Daniel Ilett - Games | Shaders | Tutorials" href="https://danielilett.com/feed.xml">
+
+  <script type="text/javascript" async="" src="./Stylised Grass with Shaders in URP_files/analytics.js.Без названия"></script><script async="" src="./Stylised Grass with Shaders in URP_files/universal.js.Без названия"></script><script type="text/javascript" async="" src="./Stylised Grass with Shaders in URP_files/MathJax.js.Без названия">
+  </script>
+
+  <script type="text/javascript" src="./Stylised Grass with Shaders in URP_files/lazysizes.min.js.Без названия" async=""></script>
+
+  <script data-ad-client="ca-pub-5101496396569275" async="" src="./Stylised Grass with Shaders in URP_files/f.txt"></script>
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./Stylised Grass with Shaders in URP_files/js"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-139156679-1');
+</script>
+
+
+
+  
+    
+      
+  <link rel="stylesheet" href="./Stylised Grass with Shaders in URP_files/all.css">
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" type="text/css" href="./Stylised Grass with Shaders in URP_files/bootstrap.min.css">
+    
+      <link rel="stylesheet" type="text/css" href="./Stylised Grass with Shaders in URP_files/bootstrap-social.css">
+    
+  
+
+  
+    <link id="CSS" rel="stylesheet" type="text/css" href="./Stylised Grass with Shaders in URP_files/main.css">
+  
+
+  
+    
+      <link rel="stylesheet" href="./Stylised Grass with Shaders in URP_files/css">
+    
+      <link rel="stylesheet" href="./Stylised Grass with Shaders in URP_files/css(1)">
+    
+  
+
+  
+
+  
+
+  
+
+  <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Stylised Grass with Shaders in URP">
+  
+
+   
+  <meta property="og:description" content="Grass Me Up">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="https://danielilett.com/2021-08-24-tut5-17-stylised-grass/">
+  <link rel="canonical" href="https://danielilett.com/2021-08-24-tut5-17-stylised-grass/">
+  
+
+<link rel="stylesheet" type="text/css" href="./Stylised Grass with Shaders in URP_files/universal.css" media="all"><script type="text/javascript" async="" src="./Stylised Grass with Shaders in URP_files/y8s9f0k4m1_popups.js.Без названия"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link href="./Stylised Grass with Shaders in URP_files/floating-chat-wrapper.css" rel="stylesheet" type="text/css"><link href="./Stylised Grass with Shaders in URP_files/css(2)" rel="stylesheet" type="text/css"><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.mjx-chtml {display: inline-block; line-height: 0; text-indent: 0; text-align: left; text-transform: none; font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; letter-spacing: normal; word-wrap: normal; word-spacing: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; margin: 0; padding: 1px 0}
+.MJXc-display {display: block; text-align: center; margin: 1em 0; padding: 0}
+.mjx-chtml[tabindex]:focus, body :focus .mjx-chtml[tabindex] {display: inline-table}
+.mjx-full-width {text-align: center; display: table-cell!important; width: 10000em}
+.mjx-math {display: inline-block; border-collapse: separate; border-spacing: 0}
+.mjx-math * {display: inline-block; -webkit-box-sizing: content-box!important; -moz-box-sizing: content-box!important; box-sizing: content-box!important; text-align: left}
+.mjx-numerator {display: block; text-align: center}
+.mjx-denominator {display: block; text-align: center}
+.MJXc-stacked {height: 0; position: relative}
+.MJXc-stacked > * {position: absolute}
+.MJXc-bevelled > * {display: inline-block}
+.mjx-stack {display: inline-block}
+.mjx-op {display: block}
+.mjx-under {display: table-cell}
+.mjx-over {display: block}
+.mjx-over > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-under > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-stack > .mjx-sup {display: block}
+.mjx-stack > .mjx-sub {display: block}
+.mjx-prestack > .mjx-presup {display: block}
+.mjx-prestack > .mjx-presub {display: block}
+.mjx-delim-h > .mjx-char {display: inline-block}
+.mjx-surd {vertical-align: top}
+.mjx-mphantom * {visibility: hidden}
+.mjx-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 2px 3px; font-style: normal; font-size: 90%}
+.mjx-annotation-xml {line-height: normal}
+.mjx-menclose > svg {fill: none; stroke: currentColor}
+.mjx-mtr {display: table-row}
+.mjx-mlabeledtr {display: table-row}
+.mjx-mtd {display: table-cell; text-align: center}
+.mjx-label {display: table-row}
+.mjx-box {display: inline-block}
+.mjx-block {display: block}
+.mjx-span {display: inline}
+.mjx-char {display: block; white-space: pre}
+.mjx-itable {display: inline-table; width: auto}
+.mjx-row {display: table-row}
+.mjx-cell {display: table-cell}
+.mjx-table {display: table; width: 100%}
+.mjx-line {display: block; height: 0}
+.mjx-strut {width: 0; padding-top: 1em}
+.mjx-vsize {width: 0}
+.MJXc-space1 {margin-left: .167em}
+.MJXc-space2 {margin-left: .222em}
+.MJXc-space3 {margin-left: .278em}
+.mjx-chartest {display: block; visibility: hidden; position: absolute; top: 0; line-height: normal; font-size: 500%}
+.mjx-chartest .mjx-char {display: inline}
+.mjx-chartest .mjx-box {padding-top: 1000px}
+.MJXc-processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MJXc-processed {display: none}
+.mjx-test {font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow: hidden; height: 1px}
+.mjx-test.mjx-test-display {display: table!important}
+.mjx-test.mjx-test-inline {display: inline!important; margin-right: -1px}
+.mjx-test.mjx-test-default {display: block!important; clear: both}
+.mjx-ex-box {display: inline-block!important; position: absolute; overflow: hidden; min-height: 0; max-height: none; padding: 0; border: 0; margin: 0; width: 1px; height: 60ex}
+.mjx-test-inline .mjx-left-box {display: inline-block; width: 0; float: left}
+.mjx-test-inline .mjx-right-box {display: inline-block; width: 0; float: right}
+.mjx-test-display .mjx-right-box {display: table-cell!important; width: 10000em!important; min-width: 0; max-width: none; padding: 0; border: 0; margin: 0}
+#MathJax_CHTML_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.mjx-chtml .mjx-noError {line-height: 1.2; vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+.MJXc-TeX-unknown-R {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: normal}
+.MJXc-TeX-unknown-I {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: normal}
+.MJXc-TeX-unknown-B {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: bold}
+.MJXc-TeX-unknown-BI {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: bold}
+.MJXc-TeX-ams-R {font-family: MJXc-TeX-ams-R,MJXc-TeX-ams-Rw}
+.MJXc-TeX-cal-B {font-family: MJXc-TeX-cal-B,MJXc-TeX-cal-Bx,MJXc-TeX-cal-Bw}
+.MJXc-TeX-frak-R {font-family: MJXc-TeX-frak-R,MJXc-TeX-frak-Rw}
+.MJXc-TeX-frak-B {font-family: MJXc-TeX-frak-B,MJXc-TeX-frak-Bx,MJXc-TeX-frak-Bw}
+.MJXc-TeX-math-BI {font-family: MJXc-TeX-math-BI,MJXc-TeX-math-BIx,MJXc-TeX-math-BIw}
+.MJXc-TeX-sans-R {font-family: MJXc-TeX-sans-R,MJXc-TeX-sans-Rw}
+.MJXc-TeX-sans-B {font-family: MJXc-TeX-sans-B,MJXc-TeX-sans-Bx,MJXc-TeX-sans-Bw}
+.MJXc-TeX-sans-I {font-family: MJXc-TeX-sans-I,MJXc-TeX-sans-Ix,MJXc-TeX-sans-Iw}
+.MJXc-TeX-script-R {font-family: MJXc-TeX-script-R,MJXc-TeX-script-Rw}
+.MJXc-TeX-type-R {font-family: MJXc-TeX-type-R,MJXc-TeX-type-Rw}
+.MJXc-TeX-cal-R {font-family: MJXc-TeX-cal-R,MJXc-TeX-cal-Rw}
+.MJXc-TeX-main-B {font-family: MJXc-TeX-main-B,MJXc-TeX-main-Bx,MJXc-TeX-main-Bw}
+.MJXc-TeX-main-I {font-family: MJXc-TeX-main-I,MJXc-TeX-main-Ix,MJXc-TeX-main-Iw}
+.MJXc-TeX-main-R {font-family: MJXc-TeX-main-R,MJXc-TeX-main-Rw}
+.MJXc-TeX-math-I {font-family: MJXc-TeX-math-I,MJXc-TeX-math-Ix,MJXc-TeX-math-Iw}
+.MJXc-TeX-size1-R {font-family: MJXc-TeX-size1-R,MJXc-TeX-size1-Rw}
+.MJXc-TeX-size2-R {font-family: MJXc-TeX-size2-R,MJXc-TeX-size2-Rw}
+.MJXc-TeX-size3-R {font-family: MJXc-TeX-size3-R,MJXc-TeX-size3-Rw}
+.MJXc-TeX-size4-R {font-family: MJXc-TeX-size4-R,MJXc-TeX-size4-Rw}
+.MJXc-TeX-vec-R {font-family: MJXc-TeX-vec-R,MJXc-TeX-vec-Rw}
+.MJXc-TeX-vec-B {font-family: MJXc-TeX-vec-B,MJXc-TeX-vec-Bx,MJXc-TeX-vec-Bw}
+@font-face {font-family: MJXc-TeX-ams-R; src: local('MathJax_AMS'), local('MathJax_AMS-Regular')}
+@font-face {font-family: MJXc-TeX-ams-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_AMS-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_AMS-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_AMS-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-B; src: local('MathJax_Caligraphic Bold'), local('MathJax_Caligraphic-Bold')}
+@font-face {font-family: MJXc-TeX-cal-Bx; src: local('MathJax_Caligraphic'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-cal-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-R; src: local('MathJax_Fraktur'), local('MathJax_Fraktur-Regular')}
+@font-face {font-family: MJXc-TeX-frak-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-B; src: local('MathJax_Fraktur Bold'), local('MathJax_Fraktur-Bold')}
+@font-face {font-family: MJXc-TeX-frak-Bx; src: local('MathJax_Fraktur'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-frak-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-BI; src: local('MathJax_Math BoldItalic'), local('MathJax_Math-BoldItalic')}
+@font-face {font-family: MJXc-TeX-math-BIx; src: local('MathJax_Math'); font-weight: bold; font-style: italic}
+@font-face {font-family: MJXc-TeX-math-BIw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Math-BoldItalic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Math-BoldItalic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Math-BoldItalic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-R; src: local('MathJax_SansSerif'), local('MathJax_SansSerif-Regular')}
+@font-face {font-family: MJXc-TeX-sans-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-B; src: local('MathJax_SansSerif Bold'), local('MathJax_SansSerif-Bold')}
+@font-face {font-family: MJXc-TeX-sans-Bx; src: local('MathJax_SansSerif'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-sans-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-I; src: local('MathJax_SansSerif Italic'), local('MathJax_SansSerif-Italic')}
+@font-face {font-family: MJXc-TeX-sans-Ix; src: local('MathJax_SansSerif'); font-style: italic}
+@font-face {font-family: MJXc-TeX-sans-Iw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Italic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Italic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-script-R; src: local('MathJax_Script'), local('MathJax_Script-Regular')}
+@font-face {font-family: MJXc-TeX-script-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Script-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Script-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Script-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-type-R; src: local('MathJax_Typewriter'), local('MathJax_Typewriter-Regular')}
+@font-face {font-family: MJXc-TeX-type-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Typewriter-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Typewriter-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Typewriter-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-R; src: local('MathJax_Caligraphic'), local('MathJax_Caligraphic-Regular')}
+@font-face {font-family: MJXc-TeX-cal-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-B; src: local('MathJax_Main Bold'), local('MathJax_Main-Bold')}
+@font-face {font-family: MJXc-TeX-main-Bx; src: local('MathJax_Main'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-main-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Main-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-I; src: local('MathJax_Main Italic'), local('MathJax_Main-Italic')}
+@font-face {font-family: MJXc-TeX-main-Ix; src: local('MathJax_Main'); font-style: italic}
+@font-face {font-family: MJXc-TeX-main-Iw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Main-Italic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-R; src: local('MathJax_Main'), local('MathJax_Main-Regular')}
+@font-face {font-family: MJXc-TeX-main-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Main-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-I; src: local('MathJax_Math Italic'), local('MathJax_Math-Italic')}
+@font-face {font-family: MJXc-TeX-math-Ix; src: local('MathJax_Math'); font-style: italic}
+@font-face {font-family: MJXc-TeX-math-Iw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Math-Italic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size1-R; src: local('MathJax_Size1'), local('MathJax_Size1-Regular')}
+@font-face {font-family: MJXc-TeX-size1-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size1-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size2-R; src: local('MathJax_Size2'), local('MathJax_Size2-Regular')}
+@font-face {font-family: MJXc-TeX-size2-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size2-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size3-R; src: local('MathJax_Size3'), local('MathJax_Size3-Regular')}
+@font-face {font-family: MJXc-TeX-size3-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size3-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size4-R; src: local('MathJax_Size4'), local('MathJax_Size4-Regular')}
+@font-face {font-family: MJXc-TeX-size4-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size4-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-vec-R; src: local('MathJax_Vector'), local('MathJax_Vector-Regular')}
+@font-face {font-family: MJXc-TeX-vec-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Vector-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Vector-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Vector-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-vec-B; src: local('MathJax_Vector Bold'), local('MathJax_Vector-Bold')}
+@font-face {font-family: MJXc-TeX-vec-Bx; src: local('MathJax_Vector'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-vec-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Vector-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Vector-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Vector-Bold.otf') format('opentype')}
+</style></head>
+
+
+  <body><div id="MathJax_Message" style="display: none;"></div>
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom top-nav-short">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://danielilett.com/">Daniel Ilett</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              
+
+
+
+
+
+
+<a href="https://danielilett.com/tutorials">Tutorials</a>
+
+            </li>
+          
+        
+          
+            <li>
+              
+
+
+
+
+
+
+<a href="https://danielilett.com/snapshot">Snapshot Shaders Pro</a>
+
+            </li>
+          
+        
+          
+            <li>
+              
+
+
+
+
+
+
+<a href="https://danielilett.com/support">Support Me</a>
+
+            </li>
+          
+        
+          
+            <li>
+              
+
+
+
+
+
+
+<a href="https://danielilett.com/aboutme">About</a>
+
+            </li>
+          
+        
+          
+            <li>
+              
+
+
+
+
+
+
+<a href="https://danielilett.com/mailing-list">Mailing List</a>
+
+            </li>
+          
+        
+
+        <li onclick="toggleTheme()" data-toggle="tooltip" data-placement="bottom" title="Toggle theme">
+          <span class="fa-stack fa-lg" aria-hidden="true">
+            <i class="fa fa-stack-2x"></i>
+              <i class="far fa-lightbulb fa-stack-1x fa-inverse"></i>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- MailerLite Universal -->
+<script>
+  (function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
+  var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
+  f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
+  var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
+  _.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
+  
+  var ml_account = ml('accounts', '3184597', 'y8s9f0k4m1', 'load');
+  </script>
+<!-- End MailerLite Universal -->
+
+<!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img="1" data-img-src-1="/img/tut5/part17-bigimg.jpg"></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header" style="background-image: url(&quot;/img/tut5/part17-bigimg.jpg&quot;);">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Stylised Grass with Shaders in URP</h1>
+		  
+		    
+			<h2 class="post-subheading">Grass Me Up</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on August 24, 2021</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="img-desc" style="display: none;"></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Stylised Grass with Shaders in URP</h1>
+		  
+		    
+			<h2 class="post-subheading">Grass Me Up</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on August 24, 2021</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+  <div class="series-part-list text-center">
+  <span>URP Series | </span>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+        <a href="https://danielilett.com/2020-03-21-tut5-urp-cel-shading/">
+          
+          <div class="series-part">
+          
+            1
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-03-28-tut5-2-urp-metaballs/">
+          
+          <div class="series-part">
+          
+            2
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-04-05-tut5-3-urp-stylised-water/">
+          
+          <div class="series-part">
+          
+            3
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-04-15-tut5-4-urp-dissolve/">
+          
+          <div class="series-part">
+          
+            4
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-04-19-tut5-5-urp-dither-transparency/">
+          
+          <div class="series-part">
+          
+            5
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-04-27-tut5-6-urp-2d-outlines/">
+          
+          <div class="series-part">
+          
+            6
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-05-19-tut5-7-urp-rain/">
+          
+          <div class="series-part">
+          
+            7
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-06-14-tut5-8-urp-vfx-portal/">
+          
+          <div class="series-part">
+          
+            8
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-07-12-tut5-9-urp-hologram/">
+          
+          <div class="series-part">
+          
+            9
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-07-21-tut5-10-urp-hologram-2/">
+          
+          <div class="series-part">
+          
+            10
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-10-09-tut5-11-urp-mystery-dungeon/">
+          
+          <div class="series-part">
+          
+            11
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2020-10-31-tut5-12-urp-retro-consoles/">
+          
+          <div class="series-part">
+          
+            12
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-01-26-tut5-13-urp-octocamo/">
+          
+          <div class="series-part">
+          
+            13
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-02-04-tut5-14-ice-refraction/">
+          
+          <div class="series-part">
+          
+            14
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-03-19-tut5-15-wall-cutout/">
+          
+          <div class="series-part">
+          
+            15
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-03-25-tut5-16-snow-layers/">
+          
+          <div class="series-part">
+          
+            16
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-08-24-tut5-17-stylised-grass/">
+          
+          <div class="series-part series-part-this">
+          
+            17
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-10-12-tut5-18-mario-64-painting/">
+          
+          <div class="series-part">
+          
+            18
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-11-06-tut5-19-glitter/">
+          
+          <div class="series-part">
+          
+            19
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-11-06-tut5-20-decals/">
+          
+          <div class="series-part">
+          
+            20
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2021-11-06-tut5-21-ps1-affine-textures/">
+          
+          <div class="series-part">
+          
+            21
+          </div>
+        </a>
+      
+        <a href="https://danielilett.com/2022-01-05-tut5-22-impossible-geom-stencils/">
+          
+          <div class="series-part">
+          
+            22
+          </div>
+        </a>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+  </div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+
+      
+        
+        
+        
+
+        <a href="https://github.com/daniel-ilett/shaders-botw-grass" id="gh-button-link" target="_blank">
+          <div class="gh-button-header">
+            Get the code!
+          </div>
+          <div class="gh-button">
+            <i class="fab fa-github gh-icon"></i><span>daniel-ilett/shaders-botw-grass</span>
+          </div>
+        </a>
+        
+      
+
+      <article role="main" class="blog-post">
+        <p><em>The Legend of Zelda: Breath of the Wild</em> is one of my favourite games of all time. While playing, I was captivated by the gorgeous landscapes, and I’ve always wanted to recreate that lush grass effect in Unity. Now that Nintendo has blessed us with a few more scraps of information about the sequel and pushed BotW back into everyone’s minds, now’s a good time to revisit the grass effect I’ve longed to make. We’re going unlock some hidden shader knowledge to make it in Universal Render Pipeline.</p>
+
+<p>This shader is based heavily on the work of other talented people, so I’ll be leaving tons of citations for further reading in this article, alongside a <a href="https://github.com/daniel-ilett/shaders-botw-grass">GitHub repo</a> for the full project. If you need a quick refresher on shaders in URP, I’ve got <a href="https://danielilett.com/2021-04-02-basics-3-shaders-in-urp/">an article</a> for that!</p>
+
+<p class="box-warning">This tutorial is aimed at people who have at least some experience with Shader Graph. We are using Unity 2020.2 and URP/Shader Graph 10.2.2.</p>
+
+<p>Hang out with me and other shader enthusiasts over on <a href="https://danielilett.com/2021-08-24-tut5-17-stylised-grass/(https://discord.gg/tPQEUwPpb3)">Discord</a> and share what you’re working on! And check out this tutorial over on YouTube:</p>
+
+<div class="video-embed">
+  <iframe src="./Stylised Grass with Shaders in URP_files/MeyW_aYE82s.html" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="center-image lazyloaded"></iframe>
+</div>
+
+<script async="" src="./Stylised Grass with Shaders in URP_files/f.txt"></script>
+
+<p><ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5101496396569275" data-ad-slot="3740606711"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+
+<hr>
+
+<h1 id="the-urp-base-shader">The URP Base Shader</h1>
+
+<p>BotW’s grass effect can be made using geometry shaders. As opposed to a vertex shader, which just messes with vertices passed to it, a geometry shader can actually create new vertices - and that’s how we’ll add new blades of grass. But we need something to start with.</p>
+
+<p>I’m starting with an unlit shader file (Create -&gt; Shader -&gt; Unlit Shader), but most of the boilerplate won’t make the cut. We’ll remove everything inside the <code class="highlighter-rouge">SubShader</code> part of the file. It should now look like this:</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Shader</span> <span class="s">"Custom/BotWGrass"</span>
+<span class="p">{</span>
+	<span class="n">Properties</span>
+	<span class="p">{</span>
+          <span class="n">_MainTex</span> <span class="p">(</span><span class="s">"Texture"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
+     <span class="p">}</span>
+     <span class="n">SubShader</span>
+     <span class="p">{</span>
+
+     <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We’ll make our shader compatible with URP, so it’ll look a bit different to the steps you might be used to when making shaders for the built-in pipeline - <a href="https://www.cyanilux.com/tutorials/urp-shader-code/">Cyan’s URP shader tutorial</a> explains the steps required clearly. I’ll give an overview of the key bits here.</p>
+
+<p>We’ll be including a lot of shader variables that can be tweaked in the material Inspector, which need to be included in the <code class="highlighter-rouge">Properties</code> section. I’ll explain what each one does as we go.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Properties</span>
+<span class="p">{</span>
+     <span class="n">_BaseColor</span><span class="p">(</span><span class="s">"Base Color"</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+     <span class="n">_TipColor</span><span class="p">(</span><span class="s">"Tip Color"</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+     <span class="n">_BladeTexture</span><span class="p">(</span><span class="s">"Blade Texture"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
+
+     <span class="n">_BladeWidthMin</span><span class="p">(</span><span class="s">"Blade Width (Min)"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mo">02</span>
+     <span class="n">_BladeWidthMax</span><span class="p">(</span><span class="s">"Blade Width (Max)"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mo">05</span>
+     <span class="n">_BladeHeightMin</span><span class="p">(</span><span class="s">"Blade Height (Min)"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span>
+     <span class="n">_BladeHeightMax</span><span class="p">(</span><span class="s">"Blade Height (Max)"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
+
+     <span class="n">_BladeSegments</span><span class="p">(</span><span class="s">"Blade Segments"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="o">=</span> <span class="mi">3</span>
+     <span class="n">_BladeBendDistance</span><span class="p">(</span><span class="s">"Blade Forward Amount"</span><span class="p">,</span> <span class="n">Float</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">38</span>
+     <span class="n">_BladeBendCurve</span><span class="p">(</span><span class="s">"Blade Curvature Amount"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">=</span> <span class="mi">2</span>
+
+     <span class="n">_BendDelta</span><span class="p">(</span><span class="s">"Bend Variation"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
+
+     <span class="n">_TessellationGrassDistance</span><span class="p">(</span><span class="s">"Tessellation Grass Distance"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mo">01</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">1</span>
+
+     <span class="n">_GrassMap</span><span class="p">(</span><span class="s">"Grass Visibility Map"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"white"</span> <span class="p">{}</span>
+     <span class="n">_GrassThreshold</span><span class="p">(</span><span class="s">"Grass Visibility Threshold"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span>
+     <span class="n">_GrassFalloff</span><span class="p">(</span><span class="s">"Grass Visibility Fade-In Falloff"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mo">05</span>
+
+     <span class="n">_WindMap</span><span class="p">(</span><span class="s">"Wind Offset Map"</span><span class="p">,</span> <span class="mi">2</span><span class="n">D</span><span class="p">)</span> <span class="o">=</span> <span class="s">"bump"</span> <span class="p">{}</span>
+     <span class="n">_WindVelocity</span><span class="p">(</span><span class="s">"Wind Velocity"</span><span class="p">,</span> <span class="n">Vector</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+     <span class="n">_WindFrequency</span><span class="p">(</span><span class="s">"Wind Pulse Frequency"</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mo">01</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Those variables need to be declared a second time in the HLSL shader code inside a special <code class="highlighter-rouge">CBUFFER</code>, which stands for ‘constant buffer’. You can use the same types for the variables as you’d usually use for built-in shader code.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CBUFFER_START</span><span class="p">(</span><span class="n">UnityPerMaterial</span><span class="p">)</span>
+     <span class="n">float4</span> <span class="n">_BaseColor</span><span class="p">;</span>
+     <span class="n">float4</span> <span class="n">_TipColor</span><span class="p">;</span>
+     <span class="kt">sampler2D</span> <span class="n">_BladeTexture</span><span class="p">;</span>
+
+     <span class="kt">float</span> <span class="n">_BladeWidthMin</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">_BladeWidthMax</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">_BladeHeightMin</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">_BladeHeightMax</span><span class="p">;</span>
+
+     <span class="kt">float</span> <span class="n">_BladeBendDistance</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">_BladeBendCurve</span><span class="p">;</span>
+
+     <span class="kt">float</span> <span class="n">_BendDelta</span><span class="p">;</span>
+
+     <span class="kt">float</span> <span class="n">_TessellationGrassDistance</span><span class="p">;</span>
+     
+     <span class="kt">sampler2D</span> <span class="n">_GrassMap</span><span class="p">;</span>
+     <span class="n">float4</span> <span class="n">_GrassMap_ST</span><span class="p">;</span>
+     <span class="kt">float</span>  <span class="n">_GrassThreshold</span><span class="p">;</span>
+     <span class="kt">float</span>  <span class="n">_GrassFalloff</span><span class="p">;</span>
+
+     <span class="kt">sampler2D</span> <span class="n">_WindMap</span><span class="p">;</span>
+     <span class="n">float4</span> <span class="n">_WindMap_ST</span><span class="p">;</span>
+     <span class="n">float4</span> <span class="n">_WindVelocity</span><span class="p">;</span>
+     <span class="kt">float</span>  <span class="n">_WindFrequency</span><span class="p">;</span>
+
+     <span class="n">float4</span> <span class="n">_ShadowColor</span><span class="p">;</span>
+<span class="n">CBUFFER_END</span>
+</code></pre></div></div>
+
+<p>We’ll be using content from Unity’s premade <code class="highlighter-rouge">Core</code> and <code class="highlighter-rouge">Lighting</code> shader files, so we’ll include those.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+</span></code></pre></div></div>
+
+<p>We’ll also start with two structs called <code class="highlighter-rouge">VertexInput</code> and <code class="highlighter-rouge">VertexOutput</code> which funnel data to and from the vertex shader respectively. They’ll just contain the vertex position, normal vector, tangent vector and UV coordinates.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">VertexInput</span>
+<span class="p">{</span>
+     <span class="n">float4</span> <span class="n">vertex</span>  <span class="o">:</span> <span class="n">POSITION</span><span class="p">;</span>
+     <span class="n">float3</span> <span class="n">normal</span>  <span class="o">:</span> <span class="n">NORMAL</span><span class="p">;</span>
+     <span class="n">float4</span> <span class="n">tangent</span> <span class="o">:</span> <span class="n">TANGENT</span><span class="p">;</span>
+     <span class="n">float2</span> <span class="n">uv</span>      <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">VertexOutput</span>
+<span class="p">{</span>
+     <span class="n">float4</span> <span class="n">vertex</span>  <span class="o">:</span> <span class="n">SV_POSITION</span><span class="p">;</span>
+     <span class="n">float3</span> <span class="n">normal</span>  <span class="o">:</span> <span class="n">NORMAL</span><span class="p">;</span>
+     <span class="n">float4</span> <span class="n">tangent</span> <span class="o">:</span> <span class="n">TANGENT</span><span class="p">;</span>
+     <span class="n">float2</span> <span class="n">uv</span>      <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Finally, we’ll add a <code class="highlighter-rouge">Pass</code> and create a fragment shader which just outputs white, and bam! We’ve got ourselves and skeleton shader to work with. Spooky. Also remember to set <code class="highlighter-rouge">Cull Off</code> so that both sides of the grass geometry get drawn and set the correct <code class="highlighter-rouge">Tags</code>.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SubShader</span>
+<span class="p">{</span>
+     <span class="n">Tags</span>
+     <span class="p">{</span>
+          <span class="s">"RenderType"</span> <span class="o">=</span> <span class="s">"Opaque"</span>
+          <span class="s">"Queue"</span> <span class="o">=</span> <span class="s">"Geometry"</span>
+          <span class="s">"RenderPipeline"</span> <span class="o">=</span> <span class="s">"UniversalPipeline"</span>
+     <span class="p">}</span>
+     <span class="n">LOD</span> <span class="mi">100</span>
+     <span class="n">Cull</span> <span class="n">Off</span>
+     <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>From this point onwards, the technique for creating the grass is heavily based on <a href="https://roystan.net/articles/grass-shader.html">Roystan’s fantastic article</a> on the subject. It’s a wonderful resource so give it a read once you’re done here!</p>
+
+<hr>
+
+<script async="" src="./Stylised Grass with Shaders in URP_files/f.txt"></script>
+
+<p><ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5101496396569275" data-ad-slot="3740606711"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+
+<h1 id="geometry-shaders">Geometry Shaders</h1>
+
+<p>A geometry shader can add new vertices. It takes every vertex output by the vertex shader, then using that as a basis, it can add new vertices of its own - we’re going to create a single triangle pointing upwards at every vertex as a starting point.</p>
+
+<p><img data-src="/img/tut5/part17-adding-geometry.jpg" class="center-image lazyloaded" alt="Adding geometry." title="We&#39;ll be sprouting new grass blades from each vertex." src="./Stylised Grass with Shaders in URP_files/part17-adding-geometry.jpg">
+<em>We’ll be sprouting new grass blades from each vertex.</em></p>
+
+<p>Our geometry shader outputs slightly different data than the vertex shader, so we’ll make a new struct called <code class="highlighter-rouge">GeomData</code> which contains the vertex position and UVs, same as before, plus the world space position. We don’t need it just yet, but we’re sowing seeds for later.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">GeomData</span>
+<span class="p">{</span>
+     <span class="n">float4</span> <span class="n">pos</span> <span class="o">:</span> <span class="n">SV_POSITION</span><span class="p">;</span>
+     <span class="n">float2</span> <span class="n">uv</span>  <span class="o">:</span> <span class="n">TEXCOORD0</span><span class="p">;</span>
+     <span class="n">float3</span> <span class="n">worldPos</span> <span class="o">:</span> <span class="n">TEXCOORD1</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>The geometry shader, which is a function called <code class="highlighter-rouge">geom</code>, which will take in a single <code class="highlighter-rouge">point</code>, or vertex, and a <code class="highlighter-rouge">TriangleStream</code> containing that <code class="highlighter-rouge">GeomData</code> struct we just made. Think of this as a big list of vertex data which we’ll add to throughout the geometry shader. We also need to specify the maximum number of vertices the geometry shader can output for every input vertex - we can start off with a <code class="highlighter-rouge">maxvertexcount</code> of 3, which corresponds to one triangle.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">maxvertexcount</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="kt">void</span> <span class="n">geom</span><span class="p">(</span><span class="n">point</span> <span class="n">VertexOutput</span> <span class="kr">input</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="k">inout</span> <span class="n">TriangleStream</span><span class="o">&lt;</span><span class="n">GeomData</span><span class="o">&gt;</span> <span class="n">triStream</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now we’ll add that triangle. I’ll jump the gun a bit and create a function called <code class="highlighter-rouge">TransformGeomToClip</code> just above the <code class="highlighter-rouge">geom</code> function, because it’ll save us time later. This function will take a root position for the grass blade, then will let us add an offset with a transformation matrix applied to the offset. This will eventually let us rotate and bend the grass blades in all kinds of ways, and it’s a convenient way of doing all the transformation operations in one place while bundling it into a <code class="highlighter-rouge">GeomData</code> instance, which gets output.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GeomData</span> <span class="nf">TransformGeomToClip</span><span class="p">(</span><span class="n">float3</span> <span class="n">pos</span><span class="p">,</span> <span class="n">float3</span> <span class="n">offset</span><span class="p">,</span> <span class="n">float3x3</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span> <span class="n">uv</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">GeomData</span> <span class="n">o</span><span class="p">;</span>
+
+     <span class="n">o</span><span class="p">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">TransformObjectToHClip</span><span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="n">mul</span><span class="p">(</span><span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">offset</span><span class="p">));</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">uv</span> <span class="o">=</span> <span class="n">uv</span><span class="p">;</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">worldPos</span> <span class="o">=</span> <span class="n">TransformObjectToWorld</span><span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="n">mul</span><span class="p">(</span><span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">offset</span><span class="p">));</span>
+
+     <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>For that function to work the way we want it to, we need to change our vertex shader so that it doesn’t apply the object-space-to-clip-space transformation – instead, the position and normal need to be transformed from object to world space. The new vertex shader will be called <code class="highlighter-rouge">geomVert</code>, and we can update the vertex shader declaration in the <code class="highlighter-rouge">Pass</code> accordingly.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">VertexOutput</span> <span class="nf">geomVert</span> <span class="p">(</span><span class="n">VertexInput</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">VertexOutput</span> <span class="n">o</span><span class="p">;</span> 
+     <span class="n">o</span><span class="p">.</span><span class="n">vertex</span> <span class="o">=</span> <span class="n">float4</span><span class="p">(</span><span class="n">TransformObjectToWorld</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">),</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">);</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">normal</span> <span class="o">=</span> <span class="n">TransformObjectToWorldNormal</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">tangent</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">tangent</span><span class="p">;</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">uv</span> <span class="o">=</span> <span class="n">TRANSFORM_TEX</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">,</span> <span class="n">_GrassMap</span><span class="p">);</span>
+     <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Back in the <code class="highlighter-rouge">geom</code> function, we’ll create a 3x3 identity matrix, then make three vertices using the <code class="highlighter-rouge">TransformGeomToClip</code> function we just wrote. Each one is passed into <code class="highlighter-rouge">triStream.Append</code>, which adds them to that big list of vertex data I mentioned (the one which was passed into <code class="highlighter-rouge">geom</code> in the first place). <code class="highlighter-rouge">triStream.RestartStrip</code> can be used to end this triangle strip and start a new one, but we’ll always create exactly one strip, so this isn’t required.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">maxvertexcount</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="kt">void</span> <span class="n">geom</span><span class="p">(</span><span class="n">point</span> <span class="n">VertexOutput</span> <span class="kr">input</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="k">inout</span> <span class="n">TriangleStream</span><span class="o">&lt;</span><span class="n">GeomData</span><span class="o">&gt;</span> <span class="n">triStream</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">float3</span> <span class="n">pos</span> <span class="o">=</span> <span class="kr">input</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">vertex</span><span class="p">.</span><span class="n">xyz</span><span class="p">;</span>
+     <span class="n">float3</span> <span class="n">normal</span> <span class="o">=</span> <span class="kr">input</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">normal</span><span class="p">;</span>
+     <span class="n">float3</span> <span class="n">tangent</span> <span class="o">=</span> <span class="kr">input</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">tangent</span><span class="p">;</span>
+
+     <span class="n">float3x3</span> <span class="n">transformationMatrix</span> <span class="o">=</span> <span class="n">float3x3</span>
+     <span class="p">(</span>
+          <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+          <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+     <span class="p">);</span>
+
+     <span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span><span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)));</span>
+     <span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)));</span>
+     <span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)));</span>
+
+     <span class="n">triStream</span><span class="p">.</span><span class="n">RestartStrip</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In the <code class="highlighter-rouge">Pass</code>, we’ll add <code class="highlighter-rouge">#pragma require geometry</code> and <code class="highlighter-rouge">#pragma geometry geom</code> to activate the geometry shader.  Now let’s see the geometry shader in action!</p>
+
+<p><img data-src="/img/tut5/part17-first-geometry.jpg" class="center-image lazyloaded" alt="First geometry shader." title="Nobody will notice the difference, right?" src="./Stylised Grass with Shaders in URP_files/part17-first-geometry.jpg">
+<em>Nobody will notice the difference, right?</em></p>
+
+<p>Our grass looks almost the same as <em>Breath of the Wild</em>! Okay, maybe not - there’s still a lot to do. Now that we’ve got our geometry shader working and grass blades sprouting from each vertex of the plane mesh, let’s breathe life into them with some color.</p>
+
+<hr>
+
+<script async="" src="./Stylised Grass with Shaders in URP_files/f.txt"></script>
+
+<p><ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5101496396569275" data-ad-slot="3740606711"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+
+<h1 id="color-gradients-and-uvs">Color Gradients and UVs</h1>
+
+<p>The <code class="highlighter-rouge">TransformGeomToClip</code> function did more than just set the position of each grass blade – it also set the UV coordinates for each vertex, and we’ll use those to add much-needed texture and a color gradient. <em>Breath of the Wild</em> actually doesn’t add much texture by the looks of it, so the addition of a texture is a bit of a stylistic tweak I chose to add.</p>
+
+<p>In the <code class="highlighter-rouge">Properties</code>, I added a <code class="highlighter-rouge">_BaseColor</code> and <code class="highlighter-rouge">_TipColor</code> for the colour gradient and a <code class="highlighter-rouge">_BladeTexture</code> to give each blade a bit of shading in the centre.</p>
+
+<p><img data-src="/img/tut5/part17-blade-texture.jpg" class="center-image lazyloaded" alt="Blade texture." title="A bit of shading in the centre will look slightly like a grass blade&#39;s stem." src="./Stylised Grass with Shaders in URP_files/part17-blade-texture.jpg">
+<em>A bit of shading in the centre will look slightly like a grass blade’s stem.</em></p>
+
+<p>In the fragment shader, it’s just a couple of lines of code to interpolate between <code class="highlighter-rouge">_BaseColor</code> and <code class="highlighter-rouge">_TipColor</code> then multiply by the <code class="highlighter-rouge">_BladeTexture</code> sample. And now our test scene suddenly looks like someone’s left strings of Pride bunting pointing skywards.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">frag</span> <span class="p">(</span><span class="n">GeomData</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span>
+<span class="p">{</span>
+     <span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_BladeTexture</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
+     <span class="k">return</span> <span class="n">color</span> <span class="o">*</span> <span class="n">lerp</span><span class="p">(</span><span class="n">_BaseColor</span><span class="p">,</span> <span class="n">_TipColor</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img data-src="/img/tut5/part17-colorful-grass.jpg" class="center-image lazyloaded" alt="Colorful grass." title="It might be slightly genetically modifed." src="./Stylised Grass with Shaders in URP_files/part17-colorful-grass.jpg">
+<em>It might be slightly genetically modifed.</em></p>
+
+<p>Obviously we can’t keep the grass looking this uniform – let’s add code to rotate each blade.</p>
+
+<hr>
+
+<h1 id="rotation-and-bend">Rotation and Bend</h1>
+
+<p>One of the problems we have right now is that we’re defining the grass in local space, so if we rotate the plane, it looks like a fold-up pungee pit. We want to the define each blade in tangent space, so that it points along the vertex normal vector, then apply a transformation from tangent to local space.</p>
+
+<p><img data-src="/img/tut5/part17-fold-up-grass.jpg" class="center-image lazyloaded" alt="Fold-up grass." title="Not to be used in war crimes." src="./Stylised Grass with Shaders in URP_files/part17-fold-up-grass.jpg">
+<em>Not to be used in war crimes.</em></p>
+
+<p>We can use the existing normal and tangent vectors to create a third vector called the bitangent vector, and create a <code class="highlighter-rouge">tangentToLocal</code> transformation matrix using the three vectors. That also means we need to change vertical offsets to be on the z-axis rather than the y-axis.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3x3</span> <span class="n">tangentToLocal</span> <span class="o">=</span> <span class="n">float3x3</span>
+<span class="p">(</span>
+     <span class="n">tangent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bitangent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+     <span class="n">tangent</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">bitangent</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">y</span><span class="p">,</span>
+     <span class="n">tangent</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="n">bitangent</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="n">normal</span><span class="p">.</span><span class="n">z</span>
+<span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span><span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)));</span>
+<span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)));</span>
+<span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>For the next part, we’ll include two functions called <code class="highlighter-rouge">rand</code> – for random number generation – and <code class="highlighter-rouge">angleAxis3x3</code> – for building rotation matrices – as well as defining <code class="highlighter-rouge">PI</code> and <code class="highlighter-rouge">TWO_PI</code>.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define UNITY_PI 3.14159265359f
+#define UNITY_TWO_PI 6.28318530718f
+</span>
+<span class="c1">// Following functions from Roystan's code:
+// (https://github.com/IronWarrior/UnityGrassGeometryShader)
+</span>
+<span class="c1">// Simple noise function, sourced from http://answers.unity.com/answers/624136/view.html
+// Extended discussion on this function can be found at the following link:
+// https://forum.unity.com/threads/am-i-over-complicating-this-random-function.454887/#post-2949326
+// Returns a number in the 0...1 range.
+</span><span class="kt">float</span> <span class="nf">rand</span><span class="p">(</span><span class="n">float3</span> <span class="n">co</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="k">return</span> <span class="n">frac</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">co</span><span class="p">.</span><span class="n">xyz</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span><span class="mi">12</span><span class="p">.</span><span class="mi">9898</span><span class="p">,</span> <span class="mi">78</span><span class="p">.</span><span class="mi">233</span><span class="p">,</span> <span class="mi">53</span><span class="p">.</span><span class="mi">539</span><span class="p">)))</span> <span class="o">*</span> <span class="mi">43758</span><span class="p">.</span><span class="mi">5453</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Construct a rotation matrix that rotates around the provided axis, sourced from:
+// https://gist.github.com/keijiro/ee439d5e7388f3aafc5296005c8c3f33
+</span><span class="n">float3x3</span> <span class="nf">angleAxis3x3</span><span class="p">(</span><span class="kt">float</span> <span class="n">angle</span><span class="p">,</span> <span class="n">float3</span> <span class="n">axis</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="kt">float</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">;</span>
+     <span class="n">sincos</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+
+     <span class="kt">float</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">c</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="n">axis</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="n">axis</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">z</span> <span class="o">=</span> <span class="n">axis</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+
+     <span class="k">return</span> <span class="n">float3x3</span>
+     <span class="p">(</span>
+          <span class="n">t</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="n">s</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">z</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span>
+          <span class="n">t</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">-</span> <span class="n">s</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span>
+          <span class="n">t</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">z</span> <span class="o">-</span> <span class="n">s</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span> <span class="o">+</span> <span class="n">c</span>
+     <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The grass blades will randomly rotate on the spot, so we can build a rotation matrix that spins around the normal vector by a random amount, then we’ll build a second rotation matrix around the x-axis for the grass blades bending forward and backwards. There’s a <code class="highlighter-rouge">_BendDelta</code> property for that. Only the tip vertex is influences by the bend transformation, so apply the transformations differently to each vertex accordingly.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Rotate around the y-axis a random amount.
+</span><span class="n">float3x3</span> <span class="n">randRotMatrix</span> <span class="o">=</span> <span class="n">angleAxis3x3</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">*</span> <span class="n">UNITY_TWO_PI</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">));</span>
+
+<span class="c1">// Rotate around the bottom of the blade a random amount.
+</span><span class="n">float3x3</span> <span class="n">randBendMatrix</span> <span class="o">=</span> <span class="n">angleAxis3x3</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">zzx</span><span class="p">)</span> <span class="o">*</span> <span class="n">_BendDelta</span> <span class="o">*</span> <span class="n">UNITY_PI</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="n">f</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+
+<span class="c1">// Transform the grass blades to the correct tangent space.
+</span><span class="n">float3x3</span> <span class="n">baseTransformationMatrix</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">tangentToLocal</span><span class="p">,</span> <span class="n">randRotMatrix</span><span class="p">);</span>
+<span class="n">float3x3</span> <span class="n">tipTransformationMatrix</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">mul</span><span class="p">(</span><span class="n">tangentToLocal</span><span class="p">),</span> <span class="n">randBendMatrix</span><span class="p">),</span> <span class="n">randRotMatrix</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img data-src="/img/tut5/part17-rotated-grass.jpg" class="center-image lazyloaded" alt="Rotated grass." title="You spin me right round baby, right round." src="./Stylised Grass with Shaders in URP_files/part17-rotated-grass.jpg">
+<em>You spin me right round baby, right round.</em></p>
+
+<p>Now if we pan back out to the Scene View, the blades are a bit more relaxed, like they’re chilling in the sun! However, every blade is still the same shape. Like in nature, we want the grass to have some variation in height, thickness and curvature.</p>
+
+<hr>
+
+<script async="" src="./Stylised Grass with Shaders in URP_files/f.txt"></script>
+
+<p><ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5101496396569275" data-ad-slot="3740606711"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+
+<h1 id="shaping-up">Shaping Up</h1>
+
+<p>So far, we’ve stuck with only three vertices per grass blade, but this restricts the amount of shape we can give them. To add curvature, we’ll need more vertices. We can define a number of <code class="highlighter-rouge">BLADE_SEGMENTS</code> at the top of the code and change the <code class="highlighter-rouge">maxvertexcount</code> to be <code class="highlighter-rouge">BLADE_SEGMENTS * 2 - 1</code>.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Top of code
+</span><span class="cp">#define BLADE_SEGMENTS 4
+</span>
+<span class="c1">// Above geom
+</span><span class="p">[</span><span class="n">maxvertexcount</span><span class="p">(</span><span class="n">BLADE_SEGMENTS</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<p>Now we’re going to randomly pick the width and height between a range of possible values and add an additional bend amount, all of which is controlled by new properties.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">width</span>  <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">_BladeWidthMin</span><span class="p">,</span> <span class="n">_BladeWidthMax</span><span class="p">,</span> <span class="n">rand</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">xzy</span><span class="p">));</span>
+<span class="kt">float</span> <span class="n">height</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">_BladeHeightMin</span><span class="p">,</span> <span class="n">_BladeHeightMax</span><span class="p">,</span> <span class="n">rand</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">zyx</span><span class="p">));</span>
+<span class="kt">float</span> <span class="n">forward</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">yyz</span><span class="p">)</span> <span class="o">*</span> <span class="n">_BladeBendDistance</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Instead of creating all three vertices manually, we’ll create them in pairs inside a <code class="highlighter-rouge">for</code> loop then set the tip vertex at the end. Every vertex besides the first two will use the transform matrix we previously used for just the tip, and we’ll add curvature using a new property called <code class="highlighter-rouge">_BladeBendCurve</code>. We can set as many <code class="highlighter-rouge">BLADE_SEGMENTS</code> as we want, and the loop does the maths for us! The offsets calculated inside the loop make sure the default shape of the blade is still the same triangle, but now it’s made using extra vertices which are able to bend independently.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create blade segments by adding two vertices at once.
+</span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">BLADE_SEGMENTS</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="kt">float</span> <span class="n">t</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">BLADE_SEGMENTS</span><span class="p">;</span>
+     <span class="n">float3</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">float3</span><span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">),</span> <span class="n">pow</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">_BladeBendCurve</span><span class="p">)</span> <span class="o">*</span> <span class="n">forward</span><span class="p">,</span> <span class="n">height</span> <span class="o">*</span> <span class="n">t</span><span class="p">);</span>
+
+     <span class="n">float3x3</span> <span class="n">transformationMatrix</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="n">baseTransformationMatrix</span> <span class="o">:</span> <span class="n">tipTransformationMatrix</span><span class="p">;</span>
+
+     <span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span> <span class="n">offset</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">offset</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">offset</span><span class="p">.</span><span class="n">z</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="p">)));</span>
+     <span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span><span class="o">-</span><span class="n">offset</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">offset</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">offset</span><span class="p">.</span><span class="n">z</span><span class="p">),</span> <span class="n">transformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">)));</span>
+<span class="p">}</span>
+
+<span class="c1">// Add the final vertex at the tip of the grass blade.
+</span><span class="n">triStream</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">TransformGeomToClip</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">float3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">forward</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">tipTransformationMatrix</span><span class="p">,</span> <span class="n">float2</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><img data-src="/img/tut5/part17-blade-curves.jpg" class="center-image lazyloaded" alt="Blade curves." title="Slouching like me after a couple of drinks." src="./Stylised Grass with Shaders in URP_files/part17-blade-curves.jpg">
+<em>Slouching like me after a couple of drinks.</em></p>
+
+<p>Now we’ve got some lovely bent blades, but the shader still doesn’t make the cut. I want to include something Roystan didn’t in the original tutorial: a way of mowing down some of the grass.</p>
+
+<hr>
+
+<h1 id="grass-visibility-map">Grass Visibility Map</h1>
+
+<p>It’s common to pass all sorts of data to shaders through the use of extra texture maps, and we’re going to use one to denote which areas of the plane should have grass and which shouldn’t. It’s a greyscale texture called <code class="highlighter-rouge">_GrassMap</code>, where a value of 1 means grass should be present, and 0 means it’s gone.</p>
+
+<p><img data-src="/img/tut5/part17-grass-map.jpg" class="center-image lazyloaded" alt="Grass map." title="This map gives us a nice pattern." src="./Stylised Grass with Shaders in URP_files/part17-grass-map.jpg">
+<em>This map gives us a nice pattern.</em></p>
+
+<p>We can read textures during the geometry stage if we use <code class="highlighter-rouge">tex2Dlod</code> instead of <code class="highlighter-rouge">tex2D</code>, which we’ll do now to read the <code class="highlighter-rouge">_GrassMap</code> property to get a visibility value. We just pick the highest quality LOD (or Level of Detail), and to do that, we pass in the UVs inside a 4-element vector, where the first two elements are the standard UV coordinates and the fourth component is the level of detail. 0 is the highest quality LOD, so we’ll use that.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">grassVisibility</span> <span class="o">=</span> <span class="n">tex2Dlod</span><span class="p">(</span><span class="n">_GrassMap</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="kr">input</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">uv</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)).</span><span class="n">r</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>We also have a <code class="highlighter-rouge">_GrassThreshold</code> property – visibility values above or equal this will result in grass being grown. We’ll just wrap most of the geometry code we wrote so far in an <code class="highlighter-rouge">if</code> statement and now we can choose not to sow grass where the threshold isn’t met.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">grassVisibility</span> <span class="o">&gt;=</span> <span class="n">_GrassThreshold</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="c1">// Most of the geom code so far.
+</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can add falloff so that the grass gets shorter at the edges too – <code class="highlighter-rouge">smoothstep</code> gets us a nice curve for that, then we just multiply the random weights used for the width and height.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">falloff</span> <span class="o">=</span> <span class="n">smoothstep</span><span class="p">(</span><span class="n">_GrassThreshold</span><span class="p">,</span> <span class="n">_GrassThreshold</span> <span class="o">+</span> <span class="n">_GrassFalloff</span><span class="p">,</span> <span class="n">grassVisibility</span><span class="p">);</span>
+
+<span class="kt">float</span> <span class="n">width</span>  <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">_BladeWidthMin</span><span class="p">,</span> <span class="n">_BladeWidthMax</span><span class="p">,</span> <span class="n">rand</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">xzy</span><span class="p">)</span> <span class="o">*</span> <span class="n">falloff</span><span class="p">);</span>
+<span class="kt">float</span> <span class="n">height</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">_BladeHeightMin</span><span class="p">,</span> <span class="n">_BladeHeightMax</span><span class="p">,</span> <span class="n">rand</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">zyx</span><span class="p">)</span> <span class="o">*</span> <span class="n">falloff</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img data-src="/img/tut5/part17-grass-visibility.jpg" class="center-image lazyloaded" alt="Grass visibility." title="This will look A LOT better when we make the grass thicker." src="./Stylised Grass with Shaders in URP_files/part17-grass-visibility.jpg">
+<em>This will look A LOT better when we make the grass thicker.</em></p>
+
+<p>You could go one further and devise a method for cutting grass based on in-game actions, such as a green-clad hero hacking at foliage in search of currency. It’d usually involve drawing on the <code class="highlighter-rouge">_GrassMap</code> in realtime. <a href="https://twitter.com/danielsantalla/status/1391135820229222401">Daniel Santalla has a great tutorial</a> for doing something very similar with snow! And on the flipside, <a href="https://www.youtube.com/watch?v=xKJHL8nQiuM">MinionsArt has created a system</a> for painting grass on a mesh. Both are great places to go after reading this article!</p>
+
+<p>Our grass has plenty of variation now, but it’s still static. Let’s add some atmosphere.</p>
+
+<hr>
+
+<h1 id="wind-zones">Wind Zones</h1>
+
+<p>I tried really hard to find out how to integrate our grass seamlessly with Unity’s wind zones, but it turned out to be a bit of a forlorn attempt. Basically, wind zones are great for terrains and particles, but not so much shaders. So I resorted to the same method as Roystan – we’ll use a texture to blow wind through the grass.</p>
+
+<p><img data-src="/img/tut5/part17-flow-map.jpg" class="center-image lazyloaded" alt="Flow map." title="That&#39;s just the way I flow." src="./Stylised Grass with Shaders in URP_files/part17-flow-map.jpg">
+<em>That’s just the way I flow.</em></p>
+
+<p>This technique involves using a flow map and scrolling it over the grass over time, then converting the texture’s colours to directions in which to bend the grass even more. Like before, we can sample the wind flow map using <code class="highlighter-rouge">tex2Dlod</code> after calculating the UVs.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float2</span> <span class="n">windUV</span> <span class="o">=</span> <span class="n">pos</span><span class="p">.</span><span class="n">xz</span> <span class="o">*</span> <span class="n">_WindMap_ST</span><span class="p">.</span><span class="n">xy</span> <span class="o">+</span> <span class="n">_WindMap_ST</span><span class="p">.</span><span class="n">zw</span> <span class="o">+</span> <span class="n">normalize</span><span class="p">(</span><span class="n">_WindVelocity</span><span class="p">.</span><span class="n">xzy</span><span class="p">)</span> <span class="o">*</span> <span class="n">_WindFrequency</span> <span class="o">*</span> <span class="n">_Time</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="n">float2</span> <span class="n">windSample</span> <span class="o">=</span> <span class="p">(</span><span class="n">tex2Dlod</span><span class="p">(</span><span class="n">_WindMap</span><span class="p">,</span> <span class="n">float4</span><span class="p">(</span><span class="n">windUV</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)).</span><span class="n">xy</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">length</span><span class="p">(</span><span class="n">_WindVelocity</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We’ll use this to create another transformation matrix which gets applied to everything apart from the two base vertices. If we chose to bend the base vertices, they could end up clipping through the floor. That’s a visual bug we don’t want to take root.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float3</span> <span class="n">windAxis</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">float3</span><span class="p">(</span><span class="n">windSample</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">windSample</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+<span class="n">float3x3</span> <span class="n">windMatrix</span> <span class="o">=</span> <span class="n">angleAxis3x3</span><span class="p">(</span><span class="n">UNITY_PI</span> <span class="o">*</span> <span class="n">windSample</span><span class="p">,</span> <span class="n">windAxis</span><span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="n">float3x3</span> <span class="n">tipTransformationMatrix</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">mul</span><span class="p">(</span><span class="n">mul</span><span class="p">(</span><span class="n">tangentToLocal</span><span class="p">,</span> <span class="n">windMatrix</span><span class="p">),</span> <span class="n">randBendMatrix</span><span class="p">),</span> <span class="n">randRotMatrix</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>You’ll need to tweak the values a lot based on the mesh and grass you’re using, but this grass is starting to blow me away!</p>
+
+<p><img data-src="/img/tut5/part17-windy-grass.jpg" class="center-image lazyload" alt="Windy grass." title="It looks better in motion.">
+<em>It looks better in motion.</em></p>
+
+<p>Because of the way I programmed the shader, it’ll look completely silly when you rotate the mesh at runtime. Oh well. You could fix it by calculating the time-based offsets in the script rather than the shader, but it wasn’t really a focus for me.</p>
+
+<p>The individual grass blades are looking full of life now. I mean, if you were a bug… wouldn’t you go for them? Problem is, the grass is a bit too spaced out. We are pretty much done with the geometry shader now, so how do we make the grass thicker? Well, we could use a mesh with more vertices, or we could make use of another optional kind of shader.</p>
+
+<hr>
+
+<script async="" src="./Stylised Grass with Shaders in URP_files/f.txt"></script>
+
+<p><ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5101496396569275" data-ad-slot="3740606711"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+
+<h1 id="tessellation-shaders">Tessellation Shaders</h1>
+
+<p>Tessellation shaders can be used to subdivide a mesh so that it’s made of more primitive shapes – triangles in our case. Typically, this lets you generate highly detailed surfaces from lower-poly meshes, and you can even generate LODs on the fly. But for a start, we’re most interested in just adding vertices within each face of the mesh. The tessellation stage as a whole slots in between the vertex and geometry stages.</p>
+
+<p><img data-src="/img/tut5/part17-tessellation.jpg" class="center-image lazyload" alt="Tessellation." title="Tessellation subdivides a mesh into a higher-poly version.">
+<em>Tessellation subdivides a mesh into a higher-poly version.</em></p>
+
+<p>Roystan’s tutorial covers tessellation, which itself is based on <a href="https://catlikecoding.com/unity/tutorials/advanced-rendering/tessellation/">Catlike Coding’s tutorial</a> – it goes into far more detail than I will. Compared to geometry shaders, tessellation shaders are a bit more technical. For a start, in HLSL, it’s two shader functions called <code class="highlighter-rouge">hull</code> and <code class="highlighter-rouge">domain</code>.</p>
+
+<p>We’ll start with the <code class="highlighter-rouge">hull</code> shader. It’s responsible for taking an input patch of vertex data and creating new <strong>control points</strong>, which are basically new vertices in the tessellated mesh. We need to define a few things above the function, but probably the most important part is the <strong>patch constant function</strong>. That’s another function we need to write separately. The hull shader function itself just returns a control point.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">domain</span><span class="p">(</span><span class="s">"tri"</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">outputcontrolpoints</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">outputtopology</span><span class="p">(</span><span class="s">"triangle_cw"</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">partitioning</span><span class="p">(</span><span class="s">"integer"</span><span class="p">)]</span>
+<span class="p">[</span><span class="n">patchconstantfunc</span><span class="p">(</span><span class="s">"patchConstantFunc"</span><span class="p">)]</span>
+<span class="n">VertexInput</span> <span class="n">hull</span><span class="p">(</span><span class="n">InputPatch</span><span class="o">&lt;</span><span class="n">VertexInput</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="k">patch</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">id</span> <span class="o">:</span> <span class="n">SV_OutputControlPointID</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="k">return</span> <span class="k">patch</span><span class="p">[</span><span class="n">id</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The patch constant function is where we write the logic that determines exactly how the new vertices are created, and I like to think of it as part of the hull shader. We’re going to create new vertices along each edge, and also in the centre of the triangle in layers. A new struct called <code class="highlighter-rouge">TessellationFactors</code> contains that data.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">TessellationFactors</span>
+<span class="p">{</span>
+     <span class="kt">float</span> <span class="n">edge</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">:</span> <span class="n">SV_TessFactor</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">inside</span>  <span class="o">:</span> <span class="n">SV_InsideTessFactor</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>In our case, we want to be able to define a distance between grass blades in the Inspector and let the tessellation system work out the right number of vertices. We’ll write another function – yes I know, we’re swimming in them at this stage – called <code class="highlighter-rouge">tessellationEdgeFactor</code>, and use this to calculate the number of new vertices on each edge. The number of inside layers can just be the mean average of those three edge values.</p>
+
+<p>The <code class="highlighter-rouge">tessellationEdgeFactor</code> function is pretty simple – we’ll take the length of the edge and divide by a property called <code class="highlighter-rouge">_TessellationGrassDistance</code>. By doing it this way, the density of grass is independent of the mesh used. Once we’ve done that and assembled all these bits of code in the right order, all we’re left with is the <code class="highlighter-rouge">domain</code> shader.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="nf">tessellationEdgeFactor</span><span class="p">(</span><span class="n">VertexInput</span> <span class="n">vert0</span><span class="p">,</span> <span class="n">VertexInput</span> <span class="n">vert1</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">float3</span> <span class="n">v0</span> <span class="o">=</span> <span class="n">vert0</span><span class="p">.</span><span class="n">vertex</span><span class="p">.</span><span class="n">xyz</span><span class="p">;</span>
+     <span class="n">float3</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">vert1</span><span class="p">.</span><span class="n">vertex</span><span class="p">.</span><span class="n">xyz</span><span class="p">;</span>
+     <span class="kt">float</span> <span class="n">edgeLength</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">);</span>
+     <span class="k">return</span> <span class="n">edgeLength</span> <span class="o">/</span> <span class="n">_TessellationGrassDistance</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Thankfully, the <code class="highlighter-rouge">domain</code> shader is a bit simpler – it takes the new vertices that were generated after the <code class="highlighter-rouge">hull</code> shader and is responsible for interpolating properties of the old vertices onto the new ones. These fancy-sounding <strong>barycentric coordinates</strong> are just a way to express the new vertices as a weighted sum of the old ones, so if we take the respective properties of the old vertices and multiply by the barycentric coordinates, we’ll get the right values of the properties for the new vertices.</p>
+
+<p><img data-src="/img/tut5/part17-barycentric-coords.jpg" class="center-image lazyloaded" alt="Barycentric Coordinates." title="They&#39;re not centred on someone called Barry." src="./Stylised Grass with Shaders in URP_files/part17-barycentric-coords.jpg">
+<em>They’re not centred on someone called Barry.</em></p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">domain</span><span class="p">(</span><span class="s">"tri"</span><span class="p">)]</span>
+<span class="n">VertexOutput</span> <span class="n">domain</span><span class="p">(</span><span class="n">TessellationFactors</span> <span class="n">factors</span><span class="p">,</span> <span class="n">OutputPatch</span><span class="o">&lt;</span><span class="n">VertexInput</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="k">patch</span><span class="p">,</span> <span class="n">float3</span> <span class="n">barycentricCoordinates</span> <span class="o">:</span> <span class="n">SV_DomainLocation</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">VertexInput</span> <span class="n">i</span><span class="p">;</span>
+
+     <span class="c1">// Create interpolation macro.
+</span>     <span class="cp">#define INTERPOLATE(fieldname) i.fieldname = \
+          patch[0].fieldname * barycentricCoordinates.x + \
+          patch[1].fieldname * barycentricCoordinates.y + \
+          patch[2].fieldname * barycentricCoordinates.z;
+</span>
+     <span class="n">INTERPOLATE</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+     <span class="n">INTERPOLATE</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span>
+     <span class="n">INTERPOLATE</span><span class="p">(</span><span class="n">tangent</span><span class="p">)</span>
+     <span class="n">INTERPOLATE</span><span class="p">(</span><span class="n">uv</span><span class="p">)</span>
+
+     <span class="k">return</span> <span class="n">tessVert</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We’ll use a macro to do this for each property rather than rewriting the logic for each one, and to make our lives easier, we’ll use a new vertex shader called <code class="highlighter-rouge">tessVert</code> which just transforms a <code class="highlighter-rouge">VertexInput</code> into a <code class="highlighter-rouge">VertexOutput</code> without changing anything. Remember that our geometry shader requires a <code class="highlighter-rouge">VertexOutput</code> and that the geometry shader happens after the tessellation shader? That’s why we do the conversion here.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">VertexOutput</span> <span class="nf">tessVert</span><span class="p">(</span><span class="n">VertexInput</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="n">VertexOutput</span> <span class="n">o</span><span class="p">;</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">vertex</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">vertex</span><span class="p">;</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">normal</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">normal</span><span class="p">;</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">tangent</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">tangent</span><span class="p">;</span>
+     <span class="n">o</span><span class="p">.</span><span class="n">uv</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">uv</span><span class="p">;</span>
+     <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>At the top of the <code class="highlighter-rouge">Pass</code>, we’ll need to put <code class="highlighter-rouge">#pragma require tessellation tessHW</code>, <code class="highlighter-rouge">#pragma hull hull</code> and <code class="highlighter-rouge">#pragma domain domain</code>.</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma require tessellation tessHW
+</span>
+<span class="cp">#pragma hull hull
+#pragma domain domain
+</span></code></pre></div></div>
+
+<p><img data-src="/img/tut5/part17-tessellated-grass.jpg" class="center-image lazyload" alt="Tessellated grass." title="Now the grass looks so much thicker!">
+<em>Now the grass looks so much thicker!</em></p>
+
+<p>There’s one shader we’ve barely touched and it’s the good old-fashioned fragment shader. We’ve got a pretty comprehensive grass setup already, but in the final step, we’re gonna make our grass able to receive shadows.</p>
+
+<hr>
+
+<script async="" src="./Stylised Grass with Shaders in URP_files/f.txt"></script>
+
+<p><ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-5101496396569275" data-ad-slot="3740606711"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+
+<h1 id="receiving-shadows">Receiving Shadows</h1>
+
+<p>The last step comes to us courtesy of <a href="https://forum.unity.com/threads/water-shader-graph-transparency-and-shadows-universal-render-pipeline-order.748142/#post-5518747">Ben Golus on the Unity forums</a>. If you’ve ever posted a technical graphics question and got a good answer, it was probably from him.</p>
+
+<p>In our fragment shader, we’re already using a grass blade texture as a sort of greyscale shading map, so all we need to do is multiply this by the lighting amount. Unity provides a couple of functions to help us calculate the lighting here – <code class="highlighter-rouge">GetShadowCoord</code> and <code class="highlighter-rouge">MainLightRealtimeShadow</code> together gets us the level of light between 0 and 1 falling on this pixel, and I’ll add an offset of 0.25 to simulate ambient light. That’s actually all there is to it!</p>
+
+<div class="language-glsl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">float4</span> <span class="n">frag</span> <span class="p">(</span><span class="n">GeomData</span> <span class="n">i</span><span class="p">)</span> <span class="o">:</span> <span class="n">SV_Target</span>
+<span class="p">{</span>
+     <span class="n">float4</span> <span class="n">color</span> <span class="o">=</span> <span class="n">tex2D</span><span class="p">(</span><span class="n">_BladeTexture</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
+
+<span class="cp">#ifdef _MAIN_LIGHT_SHADOWS
+</span>     <span class="n">VertexPositionInputs</span> <span class="n">vertexInput</span> <span class="o">=</span> <span class="p">(</span><span class="n">VertexPositionInputs</span><span class="p">)</span><span class="mi">0</span><span class="p">;</span>
+     <span class="n">vertexInput</span><span class="p">.</span><span class="n">positionWS</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">worldPos</span><span class="p">;</span>
+
+     <span class="n">float4</span> <span class="n">shadowCoord</span> <span class="o">=</span> <span class="n">GetShadowCoord</span><span class="p">(</span><span class="n">vertexInput</span><span class="p">);</span>
+     <span class="kr">half</span> <span class="n">shadowAttenuation</span> <span class="o">=</span> <span class="n">saturate</span><span class="p">(</span><span class="n">MainLightRealtimeShadow</span><span class="p">(</span><span class="n">shadowCoord</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span><span class="p">.</span><span class="mi">25</span><span class="n">f</span><span class="p">);</span>
+     <span class="n">float4</span> <span class="n">shadowColor</span> <span class="o">=</span> <span class="n">lerp</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="n">shadowAttenuation</span><span class="p">);</span>
+     <span class="n">color</span> <span class="o">*=</span> <span class="n">shadowColor</span><span class="p">;</span>
+<span class="cp">#endif
+</span>
+     <span class="k">return</span> <span class="n">color</span> <span class="o">*</span> <span class="n">lerp</span><span class="p">(</span><span class="n">_BaseColor</span><span class="p">,</span> <span class="n">_TipColor</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">uv</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img data-src="/img/tut5/part17-grass-shadows.jpg" class="center-image lazyloaded" alt="Grass shadows." title="This grass is a bit shady." src="./Stylised Grass with Shaders in URP_files/part17-grass-shadows.jpg">
+<em>This grass is a bit shady.</em></p>
+
+<p>As homework, you could also try making the grass cast shadows too. Roystan’s tutorial does this, and Cyan’s URP guide has some great content on writing a Shadow Caster pass, so those would be a great place to start.</p>
+
+<hr>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Grass is a fantastic tool to add detail to your scenes, especially in an open-world setting where it can help break up large, bland sections of ground. We learned a lot today, including two totally different kinds of shader, and we saw how we can upgrade content written for Unity’s built-in pipeline to Universal Render Pipeline.</p>
+
+<p>Look out for more details about the next big shader tutorial!</p>
+
+<hr>
+
+<h1 id="acknowledgements">Acknowledgements</h1>
+
+<h3 id="supporters">Supporters</h3>
+
+<p><a href="https://www.patreon.com/danielilett">Support me on Patreon</a> or <a href="https://ko-fi.com/danielilett">buy me a coffee on Ko-fi</a> for PDF versions of each article and to access certain articles early! Some tiers also get early access to my <a href="https://www.youtube.com/channel/UClgoE54W_4rX7jzZGiCmrXw">YouTube videos</a> or even copies of my <a href="https://itch.io/c/798909/my-asset-packs">asset packs</a>!</p>
+
+<h4 id="special-thanks-to-my-patreon-backers-for-august-2021">Special thanks to my Patreon backers for August 2021!</h4>
+
+<p style="text-align: center;">
+Gemma Louise Ilett<br>
+
+JP<br>
+
+Jack Dixon <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-1-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-1" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-2" class="mjx-mrow"><span id="MJXc-Node-3" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-1">\cdot</script> Paul Froggatt <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-2-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-4" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-5" class="mjx-mrow"><span id="MJXc-Node-6" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-2">\cdot</script> Pisit Praiwattana <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-3-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-7" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-8" class="mjx-mrow"><span id="MJXc-Node-9" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-3">\cdot</script> Sébastien Perouffe<br>
+
+FonzoUA <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-4-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-10" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-11" class="mjx-mrow"><span id="MJXc-Node-12" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-4">\cdot</script> Josh Swanson <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-5-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-13" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-14" class="mjx-mrow"><span id="MJXc-Node-15" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-5">\cdot</script> Moishi Rand <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-6-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-16" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-17" class="mjx-mrow"><span id="MJXc-Node-18" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-6">\cdot</script> Shaun Wall<br>
+
+Agnese <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-7-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-19" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-20" class="mjx-mrow"><span id="MJXc-Node-21" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-7">\cdot</script> Anna Voronova <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-8-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-22" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-23" class="mjx-mrow"><span id="MJXc-Node-24" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-8">\cdot</script> Christopher Pereira <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-9-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-25" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-26" class="mjx-mrow"><span id="MJXc-Node-27" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-9">\cdot</script> Hann <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-10-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-28" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-29" class="mjx-mrow"><span id="MJXc-Node-30" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-10">\cdot</script> Harshad <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-11-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-31" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-32" class="mjx-mrow"><span id="MJXc-Node-33" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-11">\cdot</script> James Poole <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-12-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-34" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-35" class="mjx-mrow"><span id="MJXc-Node-36" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-12">\cdot</script> Lee Miller <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-13-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-37" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-38" class="mjx-mrow"><span id="MJXc-Node-39" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-13">\cdot</script> Ming Lei <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-14-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-40" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-41" class="mjx-mrow"><span id="MJXc-Node-42" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-14">\cdot</script> Timothy Hanna <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-15-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 113%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x22C5;&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-43" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-44" class="mjx-mrow"><span id="MJXc-Node-45" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.002em; padding-bottom: 0.297em;">⋅</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⋅</mo></math></span></span><script type="math/tex" id="MathJax-Element-15">\cdot</script> Zachary Alstadt
+</p>
+
+<h4 id="and-a-shout-out-to-all-of-my-ko-fi-supporters">And a shout-out to all of my Ko-fi supporters!</h4>
+
+<hr>
+
+
+      </article>
+
+      <div class="ml-form-embed" data-account="3184597:y8s9f0k4m1" data-form="4162900:h3f8o9">
+      </div>
+
+      <br>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="https://danielilett.com/tags#unity">unity</a>
+          
+            <a href="https://danielilett.com/tags#basics">basics</a>
+          
+            <a href="https://danielilett.com/tags#shaders">shaders</a>
+          
+            <a href="https://danielilett.com/tags#stylised">stylised</a>
+          
+            <a href="https://danielilett.com/tags#grass">grass</a>
+          
+          
+        </div>
+      
+
+      
+        
+        
+        
+
+        <a href="https://github.com/daniel-ilett/shaders-botw-grass" id="gh-button-link" target="_blank">
+          <div class="gh-button-header">
+            Get the code!
+          </div>
+          <div class="gh-button">
+            <i class="fab fa-github gh-icon"></i><span>daniel-ilett/shaders-botw-grass</span>
+          </div>
+        </a>
+        
+      
+
+      <!--<a href="https://www.patreon.com/bePatron?u=1011297" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+<br/>-->
+
+<a href="https://www.patreon.com/bePatron?u=1011297" id="patreon-button-link" target="_blank">
+  <div class="patreon-button">
+    <i class="fab fa-patreon patreon-icon"></i>Support me on Patreon!
+  </div>
+</a>
+
+<script type="text/javascript" src="./Stylised Grass with Shaders in URP_files/widget_2.js.Без названия">
+</script>
+<script type="text/javascript">
+  kofiwidget2.init('Support Me on Ko-fi', '#3828e0', 'M4M2190VC');
+  kofiwidget2.draw();
+</script><style>img.kofiimg{display: initial!important;vertical-align:middle;height:13px!important;width:20px!important;padding-top:0!important;padding-bottom:0!important;border:none;margin-top:0;margin-right:5px!important;margin-left:0!important;margin-bottom:3px!important;content:url('https://storage.ko-fi.com/cdn/cup-border.png')}.kofiimg:after{vertical-align:middle;height:25px;padding-top:0;padding-bottom:0;border:none;margin-top:0;margin-right:6px;margin-left:0;margin-bottom:4px!important;content:url('https://storage.ko-fi.com/cdn/whitelogo.svg')}.btn-container{display:inline-block!important;white-space:nowrap;min-width:160px}span.kofitext{color:#fff !important;letter-spacing: -0.15px!important;text-wrap:none;vertical-align:middle;line-height:33px !important;padding:0;text-align:center;text-decoration:none!important; text-shadow: 0 1px 1px rgba(34, 34, 34, 0.05);}.kofitext a{color:#fff !important;text-decoration:none:important;}.kofitext a:hover{color:#fff !important;text-decoration:none}a.kofi-button{box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);line-height:36px!important;min-width:150px;display:inline-block!important;background-color:#29abe0;padding:2px 12px !important;text-align:center !important;border-radius:7px;color:#fff;cursor:pointer;overflow-wrap:break-word;vertical-align:middle;border:0 none #fff !important;font-family:'Quicksand',Helvetica,Century Gothic,sans-serif !important;text-decoration:none;text-shadow:none;font-weight:700!important;font-size:14px !important}a.kofi-button:visited{color:#fff !important;text-decoration:none !important}a.kofi-button:hover{opacity:.85;color:#f5f5f5 !important;text-decoration:none !important}a.kofi-button:active{color:#f5f5f5 !important;text-decoration:none !important}.kofitext img.kofiimg {height:15px!important;width:22px!important;display: initial;animation: kofi-wiggle 3s infinite;}@keyframes kofi-wiggle{0%{transform:rotate(0) scale(1)}60%{transform:rotate(0) scale(1)}75%{transform:rotate(0) scale(1.12)}80%{transform:rotate(0) scale(1.1)}84%{transform:rotate(-10deg) scale(1.1)}88%{transform:rotate(10deg) scale(1.1)}92%{transform:rotate(-10deg) scale(1.1)}96%{transform:rotate(10deg) scale(1.1)}100%{transform:rotate(0) scale(1)}}</style><link href="./Stylised Grass with Shaders in URP_files/css(3)" rel="stylesheet" type="text/css"><div class="btn-container"><a title="Support me on ko-fi.com" class="kofi-button" style="background-color:#3828e0;" href="https://ko-fi.com/M4M2190VC" target="_blank"> <span class="kofitext"><img src="./Stylised Grass with Shaders in URP_files/cup-border.png" alt="Ko-fi donations" class="kofiimg">Support Me on Ko-fi</span></a></div>
+
+
+
+      <hr>
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="https://danielilett.com/2021-08-21-basics-4-reverse-engineering-effects/" data-toggle="tooltip" data-placement="top" title="Previous Post">← Reverse Engineering Effects</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="https://danielilett.com/2021-10-12-tut5-18-mario-64-painting/" data-toggle="tooltip" data-placement="top" title="Next Post">Mario 64 Painting →</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="https://www.youtube.com/dilett07" title="YouTube"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i><i class="fab fa-youtube fa-stack-1x fa-inverse"></i></span>
+                <span class="sr-only">YouTube</span>
+              </a>
+            </li><li><a href="https://github.com/daniel-ilett" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i><i class="fab fa-github fa-stack-1x fa-inverse"></i></span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/daniel_ilett" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i><i class="fab fa-twitter fa-stack-1x fa-inverse"></i></span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://danielilett.itch.io/" title="itch.io"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i><i class="fab fa-itch-io fa-stack-1x fa-inverse"></i></span>
+                <span class="sr-only">itch.io</span>
+              </a>
+            </li><li><a href="https://www.patreon.com/danielilett" title="Patreon"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i><i class="fab fa-patreon fa-stack-1x fa-inverse"></i></span>
+                <span class="sr-only">Patreon</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Daniel Ilett
+      &nbsp;•&nbsp;
+      2022
+
+      
+      </p>
+      
+      <!-- Please don't remove this, keep my open source work credited :) -->
+      <p class="theme-by text-muted">
+        Based on theme by
+        <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+    
+        <script src="./Stylised Grass with Shaders in URP_files/jquery-3.4.1.min.js.Без названия"></script>
+    
+        <script src="./Stylised Grass with Shaders in URP_files/bootstrap.min.js.Без названия"></script>
+    
+        <script src="./Stylised Grass with Shaders in URP_files/main.js.Без названия"></script>
+    
+  
+
+
+
+
+
+
+
+
+    <script src="./Stylised Grass with Shaders in URP_files/overlay-widget.js.Без названия"></script>
+    <script>
+      kofiWidgetOverlay.draw('danielilett', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Support me',
+        'floating-chat.donateButton.background-color': '#00b9fe',
+        'floating-chat.donateButton.text-color': '#fff'
+      });
+    </script><div id="kofi-widget-overlay-fa609d1a-793e-4478-b8f3-e74b8daf2b07"><div class="floatingchat-container-wrap" style="z-index: 10000;"><iframe class="floatingchat-container" style="" id="kofi-wo-containerkofi-widget-overlay-fa609d1a-793e-4478-b8f3-e74b8daf2b07" src="./Stylised Grass with Shaders in URP_files/saved_resource.html"></iframe></div><div class="floatingchat-container-wrap-mobi" style="z-index: 10000;"><iframe class="floatingchat-container-mobi" style="" id="kofi-wo-container-mobikofi-widget-overlay-fa609d1a-793e-4478-b8f3-e74b8daf2b07" src="./Stylised Grass with Shaders in URP_files/saved_resource(1).html"></iframe></div><div id="kofi-widget-overlay-fa609d1a-793e-4478-b8f3-e74b8daf2b07-kofi-popup-iframe" class="floating-chat-kofi-popup-iframe" style="z-index: 10000; height: 0px; width: 0px; opacity: 0; transition: all 0.6s ease 0s;"><div class="floating-chat-kofi-popup-iframe-notice"><a href="https://ko-fi.com/danielilett" target="_blank" class="kfds-text-is-link-dark">ko-fi.com/danielilett</a></div><div class="floating-chat-kofi-popup-iframe-closer"><span><svg height="0px" width="15px"><line x1="2" y1="8" x2="13" y2="18" style="stroke:#000; stroke-width:3"></line><line x1="13" y1="8" x2="2" y2="18" style="stroke:#000; stroke-width:3"></line></svg></span></div><div class="floating-chat-kofi-popup-iframe-container" id="kofi-widget-overlay-fa609d1a-793e-4478-b8f3-e74b8daf2b07-kofi-popup-iframepopup-iframe-container" style="height: 100%;"></div></div><div id="kofi-widget-overlay-fa609d1a-793e-4478-b8f3-e74b8daf2b07-kofi-popup-iframe-mobi" class="floating-chat-kofi-popup-iframe-mobi" style="z-index: 10000; height: 0px; width: 0px; opacity: 0; transition: all 0.6s ease 0s;"><div class="floating-chat-kofi-popup-iframe-notice-mobi"><a href="https://ko-fi.com/danielilett" target="_blank" class="kfds-text-is-link-dark">ko-fi.com/danielilett</a></div><div class="floating-chat-kofi-popup-iframe-closer-mobi"><span><svg height="0px" width="15px"><line x1="2" y1="8" x2="13" y2="18" style="stroke:#000; stroke-width:3"></line><line x1="13" y1="8" x2="2" y2="18" style="stroke:#000; stroke-width:3"></line></svg></span></div><div class="floating-chat-kofi-popup-iframe-container-mobi" id="kofi-widget-overlay-fa609d1a-793e-4478-b8f3-e74b8daf2b07-kofi-popup-iframe-mobipopup-iframe-container-mobi" style="height: 100%;"></div></div></div>
+  
+  
+
+</body></html>
