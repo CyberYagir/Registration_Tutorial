@@ -6,7 +6,7 @@
         </td>
         <td width="50%">
             Database in DB folder<br>
-            Dev video: link<br>
+            Dev video: <a href="https://youtu.be/AbopiN4B-xg"> link</a><br>
             Unity ver: 2020.3 LTS<br>
         </td>
     </tr>
